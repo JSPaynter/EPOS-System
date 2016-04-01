@@ -1,0 +1,15 @@
+SMAP
+AddOrders_jsp.java
+JSP
+*S JSP
+*F
++ 0 AddOrders.jsp
+JSP_Pages/OrdersJSP/AddOrders.jsp
+*L
+1,12:52
+13,42:65
+54:107
+55,2:108,3
+57:114
+57,5:115
+*E
