@@ -198,10 +198,12 @@ public class AddStaff extends javax.swing.JFrame {
                 Staff staff = new Staff(txtFirstName.getText(), txtSurname.getText(), txtPhoneNo.getText(),
                         txtEmail.getText(), password, manager, salt);
                 
-                IntergratedProjectStaffApplication.JSPConnector.addStaff(staff);
+                int staffID = IntergratedProjectStaffApplication.JSPConnector.addStaff(staff);
+                staff.setStaffID(staffID);
                 
-                Utilities.Utilities.infoBox("Staff Created :" + staff.getFirstName() + " " + staff.getSurname(), "Staff Created");
+                Utilities.Utilities.infoBox("Staff Created : ID - " + staff.getStaffID() + " Name - " + staff.getFirstName() + " " + staff.getSurname(), "Staff Created");
                 clearTextBox();
+                IntergratedProjectStaffApplication.viewEditStaff.addNewStaffList(staff);
                 
             } catch (NoSuchAlgorithmException | NoSuchProviderException ex) {
                 Logger.getLogger(AddStaff.class.getName()).log(Level.SEVERE, null, ex);

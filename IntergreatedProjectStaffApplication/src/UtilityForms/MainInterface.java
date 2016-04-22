@@ -22,7 +22,6 @@ import javax.swing.JScrollPane;
 
 public class MainInterface extends javax.swing.JFrame {    
     
-    
     Staff staff;
     ArrayList<Meal> allMeals = new ArrayList<>();
     ArrayList<Meal> nonAlcoholic = new ArrayList<>();
@@ -662,8 +661,7 @@ public class MainInterface extends javax.swing.JFrame {
         btnCourse1.setSelected(true);
         btnCourse2.setSelected(false);
         btnCourse3.setSelected(false);
-        if (course == 0)
-            course = 1;
+        course = 1;
     }//GEN-LAST:event_btnStarterActionPerformed
 
     private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
@@ -672,8 +670,7 @@ public class MainInterface extends javax.swing.JFrame {
         btnCourse1.setSelected(false);
         btnCourse2.setSelected(true);
         btnCourse3.setSelected(false);
-        if (course == 0)
-            course = 2;
+        course = 2;
     }//GEN-LAST:event_btnMainActionPerformed
 
     private void btnDessertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDessertActionPerformed
@@ -682,8 +679,7 @@ public class MainInterface extends javax.swing.JFrame {
         btnCourse1.setSelected(false);
         btnCourse2.setSelected(false);
         btnCourse3.setSelected(true);
-        if (course == 0)
-            course = 3;
+        course = 3;
     }//GEN-LAST:event_btnDessertActionPerformed
 
     private void btnSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSideActionPerformed
@@ -699,11 +695,11 @@ public class MainInterface extends javax.swing.JFrame {
     private void btnSnackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSnackActionPerformed
         generateOrderButtons(snack);
         courseButtonSettings(true);
-        btnCourse1.setSelected(true);
-        btnCourse2.setSelected(false);
+        btnCourse1.setSelected(false);
+        btnCourse2.setSelected(true);
         btnCourse3.setSelected(false);
         if (course == 0)
-            course = 1;
+            course = 2;
     }//GEN-LAST:event_btnSnackActionPerformed
 
     private void btnCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourse1ActionPerformed
@@ -782,7 +778,7 @@ public class MainInterface extends javax.swing.JFrame {
         for (Meal meal : allMeals) {
             if (meal.getMenu() == 1) {
                 switch (meal.getMealTypeID()) {
-                    case 1:                        
+                    case 1:
                         nonAlcoholic.add(meal);
                         break;
                     case 2:

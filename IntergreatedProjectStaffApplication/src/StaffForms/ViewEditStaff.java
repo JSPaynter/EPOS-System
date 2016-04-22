@@ -539,16 +539,13 @@ public class ViewEditStaff extends javax.swing.JFrame {
         
         lstStaff.removeAll();
         
-        lstStaffModel = new ArrayList<>();        
-        String[] staffListArray = null;
+        lstStaffModel = new ArrayList<>();
                 
         if (!searchedStaff.isEmpty()) {
-            for (Staff staff : searchedStaff) {
+            for (Staff staff : searchedStaff)
                 lstStaffModel.add(staff.getFirstName() + " " + staff.getSurname());
-        }            
-        staffListArray = lstStaffModel.toArray(new String[0]);        
         }
-        lstStaff.setListData(staffListArray); //set list
+        lstStaff.setListData(lstStaffModel.toArray(new String[0])); //set list
     }
     
     public void setEventListeners() {
@@ -596,6 +593,13 @@ public class ViewEditStaff extends javax.swing.JFrame {
         txtSearchFirstName.setText("");
         txtSearchSurname.setText("");
         radBoth.setSelected(true);
+    }
+    
+    public void addNewStaffList(Staff newStaff) {
+        lstStaffModel.add(newStaff.getFirstName() + " " + newStaff.getSurname());
+        searchedStaff.add(newStaff);
+        originalStaff.add(newStaff);
+        lstStaff.setListData(lstStaffModel.toArray(new String[0])); //set list
     }
     
 

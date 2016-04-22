@@ -2089,8 +2089,9 @@ public class JSPPageConnector {
     //********************************************//
     //Staff functions
     //********************************************//
-    public void addStaff (Staff staff) {
+    public int addStaff (Staff staff) {
         try {
+            StringBuilder result = new StringBuilder();
             HttpURLConnection con = getURLConnection("http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/StaffJSP/AddStaff.jsp"); //set URL
             
             //2 arraylists for key and values
@@ -2119,15 +2120,25 @@ public class JSPPageConnector {
             //set header
             con.setDoOutput(true);
             con.setDoInput(true);
-            con.setRequestMethod("POST");
+            con.setRequestMethod("GET");
             
             //output data to request
             OutputStream os = con.getOutputStream();
             os.write(postData.getBytes());            
             os.close();
             
+            BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line); //all data into 1 line
+            }            
+            rd.close(); //close reader
+            String[] resultString = readBreaker(result.toString()); //convert for breaking            
+            
             //response code for error checking            
             responseCodeChecker(con.getResponseCode());
+            
+            return Integer.parseInt(resultString[0]);
             
         } catch (MalformedURLException ex) {
             Logger.getLogger(JSPPageConnector.class.getName()).log(Level.SEVERE, null, ex);
@@ -2136,6 +2147,7 @@ public class JSPPageConnector {
         } catch (IOException ex) {
             Logger.getLogger(JSPPageConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
 
     public void updateStaff(Staff staff) {        

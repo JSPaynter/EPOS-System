@@ -1,9 +1,13 @@
 package Utilities;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -182,19 +186,24 @@ public class Utilities {
     //******************************************//
     public static String getSecurePassword(String passwordToHash, String salt) throws NoSuchAlgorithmException, NoSuchProviderException
     {
-    String generatedPassword;
-
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        
-        return generatedPassword;
+         try {
+             String generatedPassword;
+             
+             MessageDigest md = MessageDigest.getInstance("SHA-512");
+             md.update(salt.getBytes("UTF-8"));
+             byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+             StringBuilder sb = new StringBuilder();
+             for(int i=0; i< bytes.length ;i++)
+             {
+                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+             }
+             generatedPassword = sb.toString();
+             
+             return generatedPassword;
+         } catch (UnsupportedEncodingException ex) {
+             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        return null;
     }
      
     //Add salt
@@ -203,6 +212,6 @@ public class Utilities {
         java.security.SecureRandom sr = java.security.SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
         sr.nextBytes(salt);
-        return salt.toString();
+        return Arrays.toString(salt);
     }
 }

@@ -10,6 +10,7 @@
     <%//STAFF_ID, FIRST_NAME, SURNAME, PHONE_NUMBER, EMAIL, PASSWORD, MANAGER
         Connection conn = null; 
         Statement stmt = null;
+        ResultSet rset = null;
         PreparedStatement pst = null;        
 
         String firstName = request.getParameter("firstName");
@@ -39,4 +40,26 @@
             e.printStackTrace();
         }
         
+        query = "SELECT STAFF_ID FROM STAFF WHERE FIRST_NAME = ? AND SURNAME = ? AND PHONE_NUMBER = ? AND "
+                + "EMAIL = ? AND PASSWORD = ? AND MANAGER = ? AND SALT = ?";
+        
+        try {
+        Utilities.conn.Open();
+        pst = Utilities.conn.conn.prepareStatement(query);
+        pst.setString(1, firstName);
+        pst.setString(2, surname);
+        pst.setString(3, phoneNo);
+        pst.setString(4, email);
+        pst.setString(5, password);
+        pst.setInt(6, manager);
+        pst.setString(7, salt);
+        rset = pst.executeQuery();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    %>
+            <% while(rset.next()){ %>
+                <%= rset.getInt(1) %>break
+            <% }
+        Utilities.conn.CloseConn(); %>
     %>

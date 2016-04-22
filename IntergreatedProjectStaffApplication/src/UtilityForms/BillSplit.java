@@ -240,6 +240,7 @@ public class BillSplit extends javax.swing.JFrame {
                         if (meal.getMealID() == order1.get(selected).getMealID()) {
                             total1 -= meal.getPrice();
                             total2 += meal.getPrice();
+                            break;
                         }
                     }
                     setLabels();
@@ -259,6 +260,7 @@ public class BillSplit extends javax.swing.JFrame {
                         if (meal.getMealID() == order2.get(selected).getMealID()) {
                             total2 -= meal.getPrice();
                             total1 += meal.getPrice();
+                            break;
                         }
                     }
                     setLabels();
@@ -290,21 +292,26 @@ public class BillSplit extends javax.swing.JFrame {
             Utilities.IntergratedProjectStaffApplication.JSPConnector.addBillOrder(order);
             Utilities.IntergratedProjectStaffApplication.JSPConnector.deleteBillOrder(order);
         }
-        mainInterface.orderModel.clear();
+        
         if (!mainInterface.currentBill.getBillOrders().isEmpty()) {
-                for (BillOrder billOrder : mainInterface.currentBill.getBillOrders()) {
-                    String orderLine = "";
-                    for (Meal meal : mainInterface.allMeals) {                    
-                        if (meal.getMealID() == billOrder.getMealID()) {
-                            orderLine = meal.getName() + " " + meal.getPrice();
-                            break;
-                        }
+            
+            for (int i = 0; i < 4; i++)
+                mainInterface.currentCourses[i] = 0;
+            
+            ArrayList<BillOrder> sortedList = new ArrayList<>();
+            //sort list
+            for (int i = 0; i < 4; i++) {
+                for (BillOrder order : mainInterface.currentBill.getBillOrders()) {
+                    if (order.getCourse() == i) {
+                        sortedList.add(order);
+                        mainInterface.currentCourses[i] += 1;
                     }
-                    if (billOrder.getComplete() == 1)                
-                        orderLine += " - Done";
-                    mainInterface.orderModel.addElement(orderLine);
                 }
-            }        
+            }
+            mainInterface.currentBill.setBillOrders(sortedList);
+            mainInterface.refreshOrderList();
+            mainInterface.setLabels();
+        }
         this.dispose();
     }
     

@@ -438,11 +438,11 @@ public class NumberPad extends javax.swing.JFrame {
             int code = Integer.parseInt(txt2.getText());
             Staff staff = Utilities.IntergratedProjectStaffApplication.JSPConnector.checkLogin(id);
             if (staff != null) {
-                String newPassword = Utilities.Utilities.getSecurePassword(String.valueOf(code), staff.getSalt());
-                if (staff.getPassword().equals(newPassword)) {
+                String newPassword = Utilities.Utilities.getSecurePassword( "" + code, staff.getSalt());
+                if (staff.getPassword().equals(newPassword))
                     Utilities.IntergratedProjectStaffApplication.mainInterface.login(staff);
-                } else {
-                    Utilities.Utilities.infoBox("ID or Password is incorrect", "Incorrect details");
+                else {
+                    Utilities.Utilities.infoBox("Password is incorrect", "Incorrect details");
                     txt1.setText("");
                     txt2.setText("");
                     txtfield = txt1;

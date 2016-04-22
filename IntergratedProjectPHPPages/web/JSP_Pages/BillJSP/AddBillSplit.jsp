@@ -36,7 +36,7 @@
             e.printStackTrace();
         }
         
-        query = "SELECT BILL_ID FROM BILL WHERE NO_OF_ITEMS = ? AND TOTAL = ? AND TABLENO = ? AND ACTIVE = 0 AND PAIDCASH = ? AND PAIDCARD = ?";
+        query = "SELECT BILL_ID FROM BILL WHERE NO_OF_ITEMS = ? AND TOTAL = ? AND TABLENO = ? AND ACTIVE = '0' AND PAIDCASH = ? AND PAIDCARD = ?";
 
         try {
         Utilities.conn.Open();
