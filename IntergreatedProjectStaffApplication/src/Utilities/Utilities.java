@@ -184,26 +184,19 @@ public class Utilities {
     //******************************************//
     //password hashing                          //
     //******************************************//
-    public static String getSecurePassword(String passwordToHash, String salt) throws NoSuchAlgorithmException, NoSuchProviderException
+    public static String getSecurePassword(String passwordToHash, String salt) throws NoSuchAlgorithmException, NoSuchProviderException, UnsupportedEncodingException
     {
-         try {
-             String generatedPassword;
-             
-             MessageDigest md = MessageDigest.getInstance("SHA-512");
-             md.update(salt.getBytes("UTF-8"));
-             byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
-             StringBuilder sb = new StringBuilder();
-             for(int i=0; i< bytes.length ;i++)
-             {
-                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-             }
-             generatedPassword = sb.toString();
-             
-             return generatedPassword;
-         } catch (UnsupportedEncodingException ex) {
-             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        return null;
+        String generatedPassword;
+
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        md.update(salt.getBytes("UTF-8"));
+        byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i< bytes.length ;i++)
+            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+        generatedPassword = sb.toString();
+
+        return generatedPassword;
     }
      
     //Add salt
@@ -212,6 +205,6 @@ public class Utilities {
         java.security.SecureRandom sr = java.security.SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
         sr.nextBytes(salt);
-        return Arrays.toString(salt);
+        return salt.toString();
     }
 }

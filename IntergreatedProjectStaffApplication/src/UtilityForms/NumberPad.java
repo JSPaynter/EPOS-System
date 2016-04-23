@@ -2,8 +2,10 @@ package UtilityForms;
 
 import Classes.Bill;
 import Classes.Staff;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -74,7 +76,6 @@ public class NumberPad extends javax.swing.JFrame {
         btn3 = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
-        txt2 = new javax.swing.JTextField();
         btn5 = new javax.swing.JButton();
         lbl2 = new javax.swing.JLabel();
         btn6 = new javax.swing.JButton();
@@ -82,6 +83,7 @@ public class NumberPad extends javax.swing.JFrame {
         btn8 = new javax.swing.JButton();
         btn9 = new javax.swing.JButton();
         btn0 = new javax.swing.JButton();
+        txt2 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -156,14 +158,6 @@ public class NumberPad extends javax.swing.JFrame {
             }
         });
 
-        txt2.setEditable(false);
-        txt2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        txt2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txt2MouseClicked(evt);
-            }
-        });
-
         btn5.setText("5");
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +196,14 @@ public class NumberPad extends javax.swing.JFrame {
         btn0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn0ActionPerformed(evt);
+            }
+        });
+
+        txt2.setEditable(false);
+        txt2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txt2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txt2MouseClicked(evt);
             }
         });
 
@@ -245,8 +247,8 @@ public class NumberPad extends javax.swing.JFrame {
                         .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt1)
-                            .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(txt2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl2)
@@ -262,8 +264,8 @@ public class NumberPad extends javax.swing.JFrame {
                     .addComponent(lbl1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl2))
+                    .addComponent(lbl2)
+                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,13 +390,13 @@ public class NumberPad extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
 
-    private void txt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt2MouseClicked
-        txtfield = txt2;
-    }//GEN-LAST:event_txt2MouseClicked
-
     private void txt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt1MouseClicked
         txtfield = txt1;
     }//GEN-LAST:event_txt1MouseClicked
+
+    private void txt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt2MouseClicked
+        txtfield = txt2;
+    }//GEN-LAST:event_txt2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -435,10 +437,10 @@ public class NumberPad extends javax.swing.JFrame {
     public void login() {
         try {
             int id = Integer.parseInt(txt1.getText());
-            int code = Integer.parseInt(txt2.getText());
+            String code = Arrays.toString(txt2.getPassword());  //Because password is from a plain text it produces seperate results than from a password field.
             Staff staff = Utilities.IntergratedProjectStaffApplication.JSPConnector.checkLogin(id);
             if (staff != null) {
-                String newPassword = Utilities.Utilities.getSecurePassword( "" + code, staff.getSalt());
+                String newPassword = Utilities.Utilities.getSecurePassword(code, staff.getSalt());
                 if (staff.getPassword().equals(newPassword))
                     Utilities.IntergratedProjectStaffApplication.mainInterface.login(staff);
                 else {
@@ -451,6 +453,8 @@ public class NumberPad extends javax.swing.JFrame {
                 Utilities.Utilities.infoBox("No Staff found with that ID", "No Staff");
 
         } catch (NoSuchAlgorithmException | NoSuchProviderException ex) {
+            Logger.getLogger(NumberPad.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(NumberPad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -521,6 +525,6 @@ public class NumberPad extends javax.swing.JFrame {
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lbl2;
     private javax.swing.JTextField txt1;
-    private javax.swing.JTextField txt2;
+    private javax.swing.JPasswordField txt2;
     // End of variables declaration//GEN-END:variables
 }

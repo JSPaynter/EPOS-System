@@ -2,6 +2,7 @@ package StaffForms;
 
 import Classes.Staff;
 import Utilities.IntergratedProjectStaffApplication;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Arrays;
@@ -152,6 +153,8 @@ public class ChangePassword extends javax.swing.JFrame {
             }
             
         } catch (NoSuchAlgorithmException | NoSuchProviderException ex) {
+            Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
         }
         

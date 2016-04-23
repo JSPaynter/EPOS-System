@@ -7,6 +7,7 @@ package StaffForms;
 
 import Classes.Staff;
 import Utilities.IntergratedProjectStaffApplication;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Arrays;
@@ -206,6 +207,8 @@ public class AddStaff extends javax.swing.JFrame {
                 IntergratedProjectStaffApplication.viewEditStaff.addNewStaffList(staff);
                 
             } catch (NoSuchAlgorithmException | NoSuchProviderException ex) {
+                Logger.getLogger(AddStaff.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(AddStaff.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

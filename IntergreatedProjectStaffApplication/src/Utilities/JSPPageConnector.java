@@ -317,6 +317,42 @@ public class JSPPageConnector {
         return bill;
     }
     
+    public ArrayList<Bill> getAllTableBill () {
+        
+        ArrayList<Bill> bills = new ArrayList<>();
+        
+        try {
+            StringBuilder result = new StringBuilder();
+            
+            HttpURLConnection con = getURLConnection("http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/BillJSP/GetAllTable.jsp");
+            
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setRequestMethod("GET");
+            
+            BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line); //all data into 1 line
+            }            
+            rd.close(); //close reader
+            String[] resultString = readBreaker(result.toString()); //convert for breaking                      
+            
+            for (int i = 0; i < resultString.length/billCollums; i++) {
+                Bill bill = new Bill(Integer.parseInt(resultString[(i*billCollums)]), LocalDate.parse(resultString[(i*billCollums)+1]),
+                        Integer.parseInt(resultString[(i*billCollums)+2]), Double.parseDouble(resultString[(i*billCollums)+3]),
+                        Integer.parseInt(resultString[(i*billCollums)+4]),Integer.parseInt(resultString[(i*billCollums)+5]),                 
+                        Double.parseDouble(resultString[(i*billCollums)+6]), Double.parseDouble(resultString[(i*billCollums)+7]));
+                bills.add(bill);
+            }            
+            
+            return bills; //return list of orders
+        } catch (IOException ex) {
+            Logger.getLogger(JSPPageConnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bills;
+    }
+    
     public ArrayList<BillOrder> getTableBillOrder (int billID) {
         
         ArrayList<BillOrder> order = new ArrayList<>();

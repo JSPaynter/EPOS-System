@@ -10,13 +10,12 @@ import javax.swing.JOptionPane;
 
 public class ManagerOptions extends javax.swing.JFrame {
 
-
     String name = "";
     
     public ManagerOptions(String inName) {
+        initComponents();
         name = inName;
         lblUsername.setText(name);
-        initComponents();
     }
 
     private ManagerOptions() {  
