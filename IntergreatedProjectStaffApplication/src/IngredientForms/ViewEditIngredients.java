@@ -97,12 +97,14 @@ public class ViewEditIngredients extends javax.swing.JFrame {
         jLabel2.setText("Name :");
 
         jLabel3.setText("Supplier :");
+        jLabel3.setEnabled(false);
 
         jLabel4.setText("Current Stock (g, ml) :");
 
         jLabel5.setText("Buy Limit (g, ml) :");
 
         cboSearchSupplier.setMaximumRowCount(999);
+        cboSearchSupplier.setEnabled(false);
 
         buttonGroup1.add(radStockHigher);
         radStockHigher.setSelected(true);
@@ -175,6 +177,7 @@ public class ViewEditIngredients extends javax.swing.JFrame {
         });
 
         btnSearchSupplier.setText("Search With Supplier");
+        btnSearchSupplier.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

@@ -17,7 +17,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showInputDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -991,6 +990,7 @@ public class MainInterface extends javax.swing.JFrame {
             lblTableNo.setText("Table Paid");
             lblTotal.setText("0.00");
             lblTotalToPay.setText("0.00");
+            Utilities.IntergratedProjectStaffApplication.numPad.dispose();
         }
     }
     

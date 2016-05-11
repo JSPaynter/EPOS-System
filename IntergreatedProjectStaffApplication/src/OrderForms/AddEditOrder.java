@@ -290,7 +290,7 @@ public class AddEditOrder extends javax.swing.JFrame {
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 1; //all cells false
+                return false; //all cells false
             }
         };
         
