@@ -650,7 +650,7 @@ public class MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCardActionPerformed
 
     private void btnAlcoholicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlcoholicActionPerformed
-        generateOrderButtons(nonAlcoholic);
+        generateOrderButtons(alcoholic);
         course = 0;
         btnCourse1.setSelected(false);
         btnCourse2.setSelected(false);
@@ -659,7 +659,7 @@ public class MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlcoholicActionPerformed
 
     private void btnNonAlcoholicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNonAlcoholicActionPerformed
-        generateOrderButtons(alcoholic);
+        generateOrderButtons(nonAlcoholic);
         course = 0;
         btnCourse1.setSelected(false);
         btnCourse2.setSelected(false);
@@ -756,41 +756,41 @@ public class MainInterface extends javax.swing.JFrame {
                 possibilities.add(String.format("Bill ID : " + bill.getBillID() + ", Table No : " + bill.getTableNo() + ", £%.2f , " + bill.getNoOfItems() + ", " + bill.getBillDate(), bill.getTotal()));
             
             String choice = (String) JOptionPane.showInputDialog(null, "Select a table (Bill ID, Table No, Bill Total, No of items, Date)", "Open Tables", JOptionPane.PLAIN_MESSAGE, null, possibilities.toArray(), possibilities.get(0));
-            
-            String[] results = choice.split(", ");
-            String[] finalResults = results[0].split("Bill ID : ");
-            int id = Integer.parseInt(finalResults[1]);
-            
-            for (Bill bill : openTables) {
-                if (id == bill.getBillID()) {
-                    currentBill = bill;
-                    
-                    for (int i = 0; i < 4; i++)
-                        currentCourses[i] = 0;
-            
-                    ArrayList<BillOrder> firstList = JSPConnector.getTableBillOrder(id);
-                    ArrayList<BillOrder> sortedList = new ArrayList<>();
-                    //sort list
-                    for (int i = 0; i < 4; i++) {
-                        for (BillOrder order : firstList) {
-                            if (order.getCourse() == i) {
-                                sortedList.add(order);
-                                currentCourses[i] += 1;
+            if (!choice.isEmpty()) {            
+                String[] results = choice.split(", ");
+                String[] finalResults = results[0].split("Bill ID : ");
+                int id = Integer.parseInt(finalResults[1]);
+
+                for (Bill bill : openTables) {
+                    if (id == bill.getBillID()) {
+                        currentBill = bill;
+
+                        for (int i = 0; i < 4; i++)
+                            currentCourses[i] = 0;
+
+                        ArrayList<BillOrder> firstList = JSPConnector.getTableBillOrder(id);
+                        ArrayList<BillOrder> sortedList = new ArrayList<>();
+                        //sort list
+                        for (int i = 0; i < 4; i++) {
+                            for (BillOrder order : firstList) {
+                                if (order.getCourse() == i) {
+                                    sortedList.add(order);
+                                    currentCourses[i] += 1;
+                                }
                             }
                         }
+                        currentBill.setBillOrders(sortedList);
+
+                        refreshOrderList();
+
+                        Double total = currentBill.getTotal();
+                        Double toPay = total - (currentBill.getPaidCard() + currentBill.getPaidCash());
+                        setLabels();
+                        lblTableNo.setText(String.valueOf(currentBill.getTableNo()));
+
                     }
-                    currentBill.setBillOrders(sortedList);
-
-                    refreshOrderList();
-
-                    Double total = currentBill.getTotal();
-                    Double toPay = total - (currentBill.getPaidCard() + currentBill.getPaidCash());
-                    setLabels();
-                    lblTableNo.setText(String.valueOf(currentBill.getTableNo()));
-                    
                 }
             }
-            
         }
     }//GEN-LAST:event_btnOpenTablesActionPerformed
 
@@ -950,8 +950,8 @@ public class MainInterface extends javax.swing.JFrame {
     public void setLabels() {
         Double total = currentBill.getTotal();
         Double toPay = total - (currentBill.getPaidCard() + currentBill.getPaidCash());        
-        lblTotal.setText(String.format("%.2f", total));
-        lblTotalToPay.setText(String.format("%.2f", toPay));
+        lblTotal.setText(String.format("£%.2f", total));
+        lblTotalToPay.setText(String.format("£%.2f", toPay));
     }
     
     public void payBill(double amount, int cashCard) {
@@ -988,8 +988,8 @@ public class MainInterface extends javax.swing.JFrame {
             }
             currentBill = null;
             lblTableNo.setText("Table Paid");
-            lblTotal.setText("0.00");
-            lblTotalToPay.setText("0.00");
+            lblTotal.setText("£0.00");
+            lblTotalToPay.setText("£0.00");
             Utilities.IntergratedProjectStaffApplication.numPad.dispose();
         }
     }

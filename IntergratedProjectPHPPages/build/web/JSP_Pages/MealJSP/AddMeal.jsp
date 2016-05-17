@@ -36,7 +36,7 @@
             e.printStackTrace();
         }
         
-        query = "SELECT MEAL_ID FROM MEAL WHERE NAME = ?, PRICE = ?, DESCRIPTION = ?";
+        query = "SELECT MEAL_ID FROM MEAL WHERE NAME = ? AND PRICE = ? AND DESCRIPTION = ?";
         
         try {
         Utilities.conn.Open();
