@@ -986,11 +986,15 @@ public class MainInterface extends javax.swing.JFrame {
                     }
                 }
             }
-            currentBill = null;
             lblTableNo.setText("Table Paid");
             lblTotal.setText("£0.00");
             lblTotalToPay.setText("£0.00");
+            Utilities.IntergratedProjectStaffApplication.JSPConnector.updateBillActive(currentBill);
+            currentBill = null;
+            orderModel.clear();
             Utilities.IntergratedProjectStaffApplication.numPad.dispose();
+        } else {
+            setLabels();
         }
     }
     

@@ -13,7 +13,7 @@
         ResultSet rset = null;
         PreparedStatement pst = null;
         
-        int mealID = Integer.parseInt(request.getParameter("MealID"));
+        int mealID = Integer.parseInt(request.getParameter("mealID"));
         
         String query = "SELECT * FROM MEAL_INGREDIENT WHERE MEAL_ID = ?";
 

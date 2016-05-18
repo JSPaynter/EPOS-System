@@ -448,9 +448,9 @@ public class JSPPageConnector {
         try {
             
             String url = "";
-            if (bill.getActive() == 0)
+            if (bill.getActive() == 1)
                 url = "http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/BillJSP/UpdateActive0.jsp";
-            else if (bill.getActive() == 1)
+            else if (bill.getActive() == 0)
                 url = "http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/BillJSP/UpdateActive1.jsp";
             
             HttpURLConnection con = getURLConnection(url); //set URL
@@ -1430,7 +1430,7 @@ public class JSPPageConnector {
         try {
             StringBuilder result = new StringBuilder();
             
-            HttpURLConnection con = getURLConnection("http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/Meal_IngredientJSP/ReadSpecificMeal_Ingredient.jsp");
+            HttpURLConnection con = getURLConnection("http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/Meal_IngredientJSP/ReadSpecificMeal_Ingredient_.jsp");
             
             //2 arraylists for key and values
             ArrayList<String> key = new ArrayList<>();
