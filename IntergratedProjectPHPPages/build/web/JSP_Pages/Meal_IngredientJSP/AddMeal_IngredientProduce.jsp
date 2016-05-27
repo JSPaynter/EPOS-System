@@ -17,7 +17,7 @@
         double stockUsed = Double.parseDouble(request.getParameter("stockUsed"));
         int produceIngredient = Integer.parseInt(request.getParameter("produceIngredient"));
         
-        String query = "INSERT INTO MEAL_INGREDIENT (MEAL_ID, INGREDIENT_ID, STOCK_USED, PRODUCE_INGREDIENT)"
+        String query = "INSERT INTO MEAL_INGREDIENT (MEAL_ID, PRODUCE_ID, STOCK_USED, PRODUCE_INGREDIENT)"
                 + "VALUES (?, ?, ?, ?)";
 
         try {

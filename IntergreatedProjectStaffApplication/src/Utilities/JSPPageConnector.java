@@ -1233,13 +1233,14 @@ public class JSPPageConnector {
             switch (mealIngredient.getProduceIngredient()) {
                 case 0:
                     url = "http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/Meal_IngredientJSP/AddMeal_IngredientProduce.jsp";
-                    id = String.valueOf(mealIngredient.getProduceID());
+                    id = String.valueOf(mealIngredient.getProduceID());                    
                     break;
                 case 1:
                     url = "http://localhost:8080/IntergratedProjectPHPPages/JSP_Pages/Meal_IngredientJSP/AddMeal_IngredientIngredient.jsp";
                     id = String.valueOf(mealIngredient.getIngredientID());
                     break;
                 default: //problem
+                    Utilities.infoBox("Problem", "Opps");
                     break;
             }
             

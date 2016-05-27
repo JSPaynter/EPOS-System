@@ -177,6 +177,7 @@ public class AddIngredientMeal extends javax.swing.JFrame {
         if (validation) {
             int ingredientID = 0;
             int produceIngredient = 0;
+            double amount = 0.00;
             String name;
             
             if (radIngredient.isSelected()) {
@@ -186,8 +187,9 @@ public class AddIngredientMeal extends javax.swing.JFrame {
                 produceIngredient = 0;
                 ingredientID = produce.get(cboItem.getSelectedIndex()).getMadeProduceID();
             }            
-            name = txtAmount.getText() + " : " + cboItem.getSelectedItem().toString();            
-            MealIngredient mealIngredient = new MealIngredient(ingredientID, produceIngredient, Double.parseDouble(txtAmount.getText()));            
+            name = txtAmount.getText() + " : " + cboItem.getSelectedItem().toString();
+            amount += Double.parseDouble(txtAmount.getText());
+            MealIngredient mealIngredient = new MealIngredient(ingredientID, produceIngredient, amount);            
             switch (addOrEdit) {
                     case 1: //edit                        
                         Utilities.IntergratedProjectStaffApplication.viewEditMeal.addIngredient(mealIngredient, name);

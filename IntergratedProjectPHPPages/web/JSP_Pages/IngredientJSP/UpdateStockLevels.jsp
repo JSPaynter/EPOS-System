@@ -17,7 +17,7 @@
         int ingredientID = Integer.parseInt(request.getParameter("ingredientID"));
         double currentStock = Double.parseDouble(request.getParameter("currentStock"));
         
-        String query = "UPDATE INGREDIENT SET CURRENT_STOCK = ?"
+        String query = "UPDATE INGREDIENT SET CURRENT_STOCK = (CURRENT_STOCK - ?)"
                 + "WHERE INGREDIENT_ID = ?";
 
         try {

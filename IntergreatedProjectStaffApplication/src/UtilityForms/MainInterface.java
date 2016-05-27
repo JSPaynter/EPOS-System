@@ -840,6 +840,7 @@ public class MainInterface extends javax.swing.JFrame {
     
     public void refreshMenu() {
         allMeals = JSPConnector.getAllMeal();
+        
         for (Meal meal : allMeals) {
             if (meal.getMenu() == 1) {
                 switch (meal.getMealTypeID()) {
@@ -963,7 +964,7 @@ public class MainInterface extends javax.swing.JFrame {
         
         Utilities.IntergratedProjectStaffApplication.JSPConnector.updateBill(currentBill); //update database
         
-        if (currentBill.getPaidCard()+currentBill.getPaidCash() == currentBill.getTotal()) { //check if order should still be active
+        if (currentBill.getPaidCard()+currentBill.getPaidCash() >= currentBill.getTotal()) { //check if order should still be active
             Utilities.IntergratedProjectStaffApplication.JSPConnector.updateBillActive(currentBill);
             
             for (BillOrder order : currentBill.getBillOrders()) {
@@ -973,7 +974,7 @@ public class MainInterface extends javax.swing.JFrame {
                         for (MealIngredient mealIngredient : mealIngredients) {
                             if (mealIngredient.getProduceIngredient() == 1) //ingredient is an ingredient
                                 Utilities.IntergratedProjectStaffApplication.JSPConnector.updateStock(mealIngredient.getIngredientID(), mealIngredient.getStockUsed());
-                            else if (mealIngredient.getProduceIngredient() == 1) { //ingredient is a produce
+                            else if (mealIngredient.getProduceIngredient() == 0) { //ingredient is a produce
                                 double amountMade = Utilities.IntergratedProjectStaffApplication.JSPConnector.getProduce(mealIngredient.getProduceID()).getAmountMade();
                                 double portion = mealIngredient.getStockUsed() / amountMade; //portion of the ingredients to take off
                                 ArrayList<MadeIngredient> madeIngredients = Utilities.IntergratedProjectStaffApplication.JSPConnector.getSpecificProduceIngredient(mealIngredient.getProduceID());
@@ -988,7 +989,7 @@ public class MainInterface extends javax.swing.JFrame {
             }
             lblTableNo.setText("Table Paid");
             lblTotal.setText("£0.00");
-            lblTotalToPay.setText("£0.00");
+            lblTotalToPay.setText(String.format("£%.2f", currentBill.getTotal() - (currentBill.getPaidCard()+currentBill.getPaidCash())));
             Utilities.IntergratedProjectStaffApplication.JSPConnector.updateBillActive(currentBill);
             currentBill = null;
             orderModel.clear();

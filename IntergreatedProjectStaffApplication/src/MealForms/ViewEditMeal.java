@@ -1,6 +1,7 @@
 package MealForms;
 
 import Classes.Ingredient;
+import Classes.MadeProduce;
 import Classes.Meal;
 import Classes.MealIngredient;
 import Classes.MealType;
@@ -15,6 +16,7 @@ public class ViewEditMeal extends javax.swing.JFrame {
 
     ArrayList<Meal> originalMeal = new ArrayList<>();
     ArrayList<Meal> searchedMeal = new ArrayList<>();
+    ArrayList<MadeProduce> produceList = new ArrayList<>();
     ArrayList<Ingredient> ingredientList = new ArrayList<>();
     ArrayList<MealIngredient> newIngredients = new ArrayList<>();
     ArrayList<MealIngredient> deleteIngredients = new ArrayList<>();
@@ -532,9 +534,11 @@ public class ViewEditMeal extends javax.swing.JFrame {
                 setCurrentMeal();
                 lstMealModel.set(currentSelectionMeal, currentMeal.getName());
                 Utilities.IntergratedProjectStaffApplication.JSPConnector.updateMeal(currentMeal);
+                originalMeal.remove(currentSelectionMeal);
+                originalMeal.add(currentSelectionMeal, currentMeal);
                 
                 for (MealIngredient ingredient : newIngredients) {
-                    Utilities.IntergratedProjectStaffApplication.JSPConnector.updateMealIngredient(ingredient);
+                    Utilities.IntergratedProjectStaffApplication.JSPConnector.addMealIngredient(ingredient);
                     currentMeal.getMealIngredients().add(ingredient);
                 }
                 for (MealIngredient ingredient : deleteIngredients) {
@@ -602,6 +606,7 @@ public class ViewEditMeal extends javax.swing.JFrame {
         originalMeal = Utilities.IntergratedProjectStaffApplication.JSPConnector.getAllMeal();        
         ArrayList<MealIngredient> mealIngredients = Utilities.IntergratedProjectStaffApplication.JSPConnector.getAllMealIngredients();
         ingredientList = Utilities.IntergratedProjectStaffApplication.JSPConnector.getAllIngredient();
+        produceList = Utilities.IntergratedProjectStaffApplication.JSPConnector.getAllProduce();
         mealTypes = Utilities.IntergratedProjectStaffApplication.JSPConnector.getAllMealType();
         
         populateComboBox();
@@ -682,12 +687,25 @@ public class ViewEditMeal extends javax.swing.JFrame {
         newIngredients.clear();
         deleteIngredients.clear();
         lstIngredientModel.clear();
-        
+        //needs extra to display produce
         for (MealIngredient mealIngredient : currentMeal.getMealIngredients()) {
-            for (Ingredient ingredient: ingredientList) {
-                if (mealIngredient.getIngredientID() == ingredient.getIngredientID())
-                    lstIngredientModel.addElement(mealIngredient.getStockUsed() + " : "  +ingredient.getName());
-                break;
+            switch (mealIngredient.getProduceIngredient()) {
+                case 1:
+                    for (Ingredient ingredient: ingredientList) {                
+                        if (mealIngredient.getIngredientID() == ingredient.getIngredientID()) {
+                            lstIngredientModel.addElement(mealIngredient.getStockUsed() + " : "  + ingredient.getName());
+                            break;
+                        }
+                    }
+                    break;
+                case 0:
+                    for (MadeProduce produce : produceList) {
+                        if (mealIngredient.getProduceID() == produce.getMadeProduceID()) {
+                            lstIngredientModel.addElement(mealIngredient.getStockUsed() + " : "  + produce.getName());
+                            break;
+                        }
+                    }
+                    break;
             }
         }
         
@@ -701,6 +719,7 @@ public class ViewEditMeal extends javax.swing.JFrame {
     }
     
     public void addIngredient(MealIngredient ingredient, String name) {
+        ingredient.setMealID(currentMeal.getMealID());
         newIngredients.add(ingredient);
         lstIngredientModel.addElement(name);
     }

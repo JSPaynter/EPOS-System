@@ -329,16 +329,17 @@ public class ViewEditProduce extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddIngredientActionPerformed
 
     private void btnRemoveIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveIngredientActionPerformed
-        
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you wish to remove " + lstIngredientModel.get(currentSelectionIngredient) ,"Remove Ingredient", JOptionPane.YES_NO_OPTION);
-        if(dialogResult == JOptionPane.YES_OPTION){        
-            if (currentSelectionIngredient < originalIngredientSize) { //add it to the current delete list, and remove from list, descrease "array size"
-                deleteIngredients.add(currentProduce.getMadeIngredients().get(currentSelectionIngredient));
-                originalIngredientSize =- 1;
-            } else if (currentSelectionIngredient >= originalIngredientSize) {
-                deleteIngredients.remove(currentSelectionIngredient - originalIngredientSize); //remove it from hte delete update list
+        if (currentSelectionIngredient != -1) {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you wish to remove " + lstIngredientModel.get(currentSelectionIngredient) ,"Remove Ingredient", JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){        
+                if (currentSelectionIngredient <= originalIngredientSize) { //add it to the current delete list, and remove from list, descrease "array size"
+                    deleteIngredients.add(currentProduce.getMadeIngredients().get(currentSelectionIngredient));
+                    originalIngredientSize -= 1;
+                } else if (currentSelectionIngredient > originalIngredientSize) {
+                    deleteIngredients.remove(currentSelectionIngredient - originalIngredientSize); //remove it from the delete update list
+                }
+                lstIngredientModel.remove(currentSelectionIngredient);
             }
-            lstIngredientModel.remove(currentSelectionIngredient);
         }
     }//GEN-LAST:event_btnRemoveIngredientActionPerformed
 
